@@ -12,8 +12,9 @@ pipeline{
         }
         stage('Deploy to repository'){
             steps {
-                sh 'scp target/keycloak-4.8.3.Final.deb repository:/tmp'
-                sh 'ssh repository reprepro --ask-passphrase -Vb /var/www/deb-repository includedeb squeeze /tmp/keycloak-4.8.3.Final.deb'
+                sh 'who am i '
+                sh 'scp -i /var/lib/jenkins/.ssh/id_rsa target/keycloak-4.8.3.Final.deb repository:/tmp'
+                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa repository reprepro --ask-passphrase -Vb /var/www/deb-repository includedeb squeeze /tmp/keycloak-4.8.3.Final.deb'
             }
         }
     }
