@@ -1,0 +1,11 @@
+#!/bin/sh
+
+chown keycloak: -R /opt/keycloak-4.8.3.Final
+
+cd /opt/keycloak-4.8.3.Final
+chmod 700 standalone
+chmod 700 bin/*sh
+
+systemctl daemon-reload
+systemctl start keycloak
+

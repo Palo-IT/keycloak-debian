@@ -1,0 +1,8 @@
+Package: Keycloak
+Version: 4.8.3.Final
+Section: misc
+Priority: optional
+Architecture: all
+Depends: jdk (>= 1.8) | default-jdk | default-jdk-headless | openjdk-8-jdk
+Maintainer: Ali rahmani <arahmani@palo-it.com>
+Description: MunichRE

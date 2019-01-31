@@ -1,0 +1,47 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mr.drive</groupId>
+    <artifactId>keycloak-debian-builder</artifactId>
+    <version>4.8.3.Final</version>
+    <name>Keycloak debian builder</name>
+
+    <build>
+<!--
+        <resources>
+            <resource>
+                <directory>keycloak-4.8.3.Final</directory>
+            </resource>
+        </resources>
+-->
+
+        <plugins>
+            <plugin>
+                <artifactId>jdeb</artifactId>
+                <groupId>org.vafer</groupId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jdeb</goal>
+                        </goals>
+                        <configuration>
+                            <deb>${project.build.directory}/keycloak-4.8.3.Final.deb</deb>
+                            <dataSet>
+                                <data>
+                                    <src>${project.basedir}/keycloak-4.8.3.Final</src>
+                                    <type>directory</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                    </mapper>
+                                </data>
+                            </dataSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

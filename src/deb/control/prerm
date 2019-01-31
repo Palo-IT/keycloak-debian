@@ -1,0 +1,12 @@
+#!/bin/sh
+
+systemctl stop keycloak
+
+test=$(ps -edf | grep org.jboss.as.standalone | grep -v grep|wc -l)
+
+while [ $test != 0 ]
+do
+    echo Waiting Keycloak to shut down
+    sleep 1
+    test=$(ps -edf | grep org.jboss.as.standalone | grep -v grep|wc -l)
+done

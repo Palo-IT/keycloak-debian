@@ -1,0 +1,9 @@
+#!/bin/sh
+
+grep -q keycloak /etc/group || groupadd -r keycloak
+grep -q keycloak /etc/passwd || useradd -m -d /var/lib/keycloak -s /sbin/nologin -r -g keycloak keycloak
+
+
+
+
+
