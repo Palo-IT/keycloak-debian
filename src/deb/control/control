@@ -1,4 +1,4 @@
-Package: Keycloak
+Package: keycloak
 Version: 4.8.3.Final
 Section: misc
 Priority: optional
