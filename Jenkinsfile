@@ -12,9 +12,14 @@ pipeline{
         }
         stage('Deploy to repository'){
             steps {
-                sh 'who am i '
                 sh 'scp -i /var/lib/jenkins/.ssh/id_rsa target/keycloak-4.8.3.Final.deb repository:/tmp'
                 sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa repository sudo reprepro --ask-passphrase -Vb /var/www/deb-repository includedeb squeeze /tmp/keycloak-4.8.3.Final.deb'
+            }
+        }
+        stage('Install package on Drive UI host'){
+            steps{
+                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa drive-ui sudo apt-get clean'
+                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa drive-ui sudo apt-get install --reinstall keycloak -y --allow-unauthenticated'
             }
         }
     }
