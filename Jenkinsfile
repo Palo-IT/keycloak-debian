@@ -4,8 +4,6 @@ pipeline{
         maven '3.6.0'
         jdk 'jdk8'
     }
-    def pom = readMavenPom file: 'pom.xml'
-    def gitProps = readProperties file: 'target/classes/git.properties'
 
     stages{
         stage('Build the Debian package'){
@@ -14,6 +12,9 @@ pipeline{
             }
         }
         stage('Deploy to repository'){
+            def pom = readMavenPom file: 'pom.xml'
+            def gitProps = readProperties file: 'target/classes/git.properties'
+
             steps {
                 sh 'scp -i /var/lib/jenkins/.ssh/id_rsa target/keycloak-${pom.version}-${gitProps.git.commit.id.abbrev}.deb repository:/tmp'
                 sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa repository sudo reprepro --ask-passphrase -Vb /var/www/deb-repository includedeb squeeze /tmp/keycloak-${pom.version}-${gitProps.git.commit.id.abbrev}.deb'
