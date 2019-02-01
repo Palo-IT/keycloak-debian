@@ -4,6 +4,9 @@ pipeline{
         maven '3.6.0'
         jdk 'jdk8'
     }
+    def pom = readMavenPom file: 'pom.xml'
+    def gitProps = readProperties file: 'target/classes/git.properties'
+
     stages{
         stage('Build the Debian package'){
             steps {
@@ -12,8 +15,8 @@ pipeline{
         }
         stage('Deploy to repository'){
             steps {
-                sh 'scp -i /var/lib/jenkins/.ssh/id_rsa target/keycloak-4.8.3.Final.deb repository:/tmp'
-                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa repository sudo reprepro --ask-passphrase -Vb /var/www/deb-repository includedeb squeeze /tmp/keycloak-4.8.3.Final.deb'
+                sh 'scp -i /var/lib/jenkins/.ssh/id_rsa target/keycloak-${pom.version}-${gitProps.git.commit.id.abbrev}.deb repository:/tmp'
+                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa repository sudo reprepro --ask-passphrase -Vb /var/www/deb-repository includedeb squeeze /tmp/keycloak-${pom.version}-${gitProps.git.commit.id.abbrev}.deb'
             }
         }
         stage('Install package on Drive UI host'){

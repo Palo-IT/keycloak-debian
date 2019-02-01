@@ -6,15 +6,30 @@
     <name>Keycloak debian builder</name>
 
     <build>
-<!--
         <resources>
             <resource>
-                <directory>keycloak-4.8.3.Final</directory>
+                <directory>src/deb</directory>
+                <filtering>true</filtering>
             </resource>
         </resources>
--->
-
         <plugins>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.2.5</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>jdeb</artifactId>
                 <groupId>org.vafer</groupId>
@@ -26,7 +41,8 @@
                             <goal>jdeb</goal>
                         </goals>
                         <configuration>
-                            <deb>${project.build.directory}/keycloak-4.8.3.Final.deb</deb>
+                            <controlDir>${project.build.directory}/classes/control</controlDir>
+                            <deb>${project.build.directory}/keycloak-${project.version}-${git.commit.id.abbrev}.deb</deb>
                             <dataSet>
                                 <data>
                                     <src>${project.basedir}/keycloak-4.8.3.Final</src>

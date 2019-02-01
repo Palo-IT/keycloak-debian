@@ -1,5 +1,5 @@
 Package: keycloak
-Version: 4.8.3.Final
+Version: ${project.version}-${git.commit.id.abbrev}
 Section: misc
 Priority: optional
 Architecture: all
