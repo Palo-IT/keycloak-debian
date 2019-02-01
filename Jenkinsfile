@@ -17,9 +17,5 @@ node{
         sh "scp -i /var/lib/jenkins/.ssh/id_rsa target/keycloak-${version}-${commitId}.deb repository:/tmp"
         sh "ssh -i /var/lib/jenkins/.ssh/id_rsa repository sudo reprepro --ask-passphrase -Vb /var/www/deb-repository includedeb squeeze /tmp/keycloak-${version}-${commitId}.deb"
     }
-    stage('Install package on Drive UI host'){
-        sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa drive-ui sudo apt-get clean'
-        sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa drive-ui sudo apt-get install keycloak -y --allow-unauthenticated'
-    }
 
 }
