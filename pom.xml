@@ -25,10 +25,18 @@
                         </goals>
                         <phase>initialize</phase>
                     </execution>
-                </executions>
+	    </executions>
                 <configuration>
+                    <dateFormat>yyyyMMdd-HHmmss</dateFormat>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.describe$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.branch$</includeOnlyProperty>
+                    </includeOnlyProperties>
                 </configuration>
+	    
             </plugin>
             <plugin>
                 <artifactId>jdeb</artifactId>
